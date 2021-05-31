@@ -1,0 +1,107 @@
+<div class="container-fluid register">
+  <div class="row">
+    <div class="col-md-3 register-left">
+      <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+      <h3>Bienvenido</h3>
+      <p>Aquí puedes comprar o vender productos de la tienda.</p>
+    </div>
+    <div class="col-md-9 register-right">
+      <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+             aria-selected="true">Comprar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+             aria-selected="false">Vender</a>
+        </li>
+      </ul>
+
+      <!-- Compras -->
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <h3 class="register-heading">Compras (Agregar a stock)</h3>
+          <form [formGroup]="buyForm" (ngSubmit)="buy()" class="row register-form">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group" formGroupName="product">
+                <label for="product">Producto *</label>
+                <select id="product" class="form-control" formControlName="idProduct" (change)="changeProductBuy($event)">
+                  <option class="hidden" selected disabled>Porfavor selecciona un producto</option>
+                  <option value="{{product.idProduct}}" *ngFor="let product of listProducts">{{product.name}}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="productBuy">
+                <span>Información del producto </span>
+                <br>
+                <ul>
+                  <li>Nombre: {{productBuy.name}}</li>
+                  <li>Stock: {{productBuy.stock}}</li>
+                  <li>Precio: $ {{productBuy.price}}</li>
+                  <li>Descripción: <br><textarea cols="20" rows="4" disabled>{{productBuy.description}}</textarea> </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="quantity">Cantidad *</label>
+                <input type="number" class="form-control" id="quantity" formControlName="quantity" value=""/>
+              </div>
+              <div class="form-group" formGroupName="kardexHeader">
+                <label for="buyer_doc">Documento de identificación *</label>
+                <input type="text" class="form-control" id="buyer_doc" value="" formControlName="documentSeller"/>
+              </div>
+              <input type="submit" [disabled]="!buyForm.valid" class="btn btn-primary" value="Enviar"/>
+            </div>
+          </form>
+        </div>
+
+        <!-- Ventas -->
+        <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+          <h3 class="register-heading">Ventas</h3>
+          <form [formGroup]="sellForm" (ngSubmit)="sell()"  class="row register-form">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group" formGroupName="product">
+                <label for="product_sell">Producto *</label>
+                <select id="product_sell" class="form-control" formControlName="idProduct" (change)="changeProductSell($event)">
+                  <option class="hidden" selected disabled>Porfavor selecciona un producto</option>
+                  <option value="{{product.idProduct}}" *ngFor="let product of listProducts">{{product.name}}</option>
+                </select>
+              </div>
+
+              <div class="form-group" *ngIf="productSell">
+                <span>Información del producto </span>
+                <br>
+                <ul>
+                  <li>Nombre: {{productSell.name}}</li>
+                  <li>Stock: {{productSell.stock}}</li>
+                  <li>Precio: $ {{productSell.price}}</li>
+                  <li>Descripción: <br><textarea cols="20" rows="4" disabled>{{productSell.description}}</textarea> </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="quantity_sell">Cantidad *</label>
+                <input type="number" class="form-control" id="quantity_sell" value="" formControlName="quantity"/>
+              </div>
+              <div class="form-group" formGroupName="kardexHeader">
+                <label for="buyer_doc_sell">Documento de identificación (Vendedor) *</label>
+                <input type="text" class="form-control" id="buyer_doc_sell"  formControlName="documentSeller" value=""/>
+              </div>
+              <div class="form-group" formGroupName="kardexHeader">
+                <label for="seller_doc_sell">Documento de identificación (Comprador) *</label>
+                <input type="text" class="form-control" id="seller_doc_sell" formControlName="documentBuyer" value=""/>
+              </div>
+              <input type="submit" [disabled]="!sellForm.valid" class="btn btn-primary" value="Enviar"/>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
